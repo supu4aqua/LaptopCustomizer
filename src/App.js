@@ -55,18 +55,20 @@ class App extends Component {
       0
     );
 
-    const features = Object.keys(this.props.features).map(key => {
-      const options = this.props.features[key].map((item, index) => {
+    const features = Object.keys(this.props.features).map((feature, idx) => {
+      const featureHash = feature + '-' + idx;
+      const options = this.props.features[feature].map((item, index) => {
+        const itemHash = JSON.stringify(item);
         const selectedClass =
-          item.name === this.state.selected[key].name
+          item.name === this.state.selected[feature].name
             ? 'feature__selected'
             : '';
         const featureClass = 'feature__option ' + selectedClass;
         return (
-          <li key={index} className="feature__item">
+          <li key={itemHash} className="feature__item">
             <div
               className={featureClass}
-              onClick={e => this.updateFeature(key, item)}
+              onClick={e => this.updateFeature(feature, item)}
             >
               {item.name}(
               {new Intl.NumberFormat('en-US', {
@@ -80,8 +82,8 @@ class App extends Component {
       });
 
       return (
-        <div className="feature" key={key}>
-          <div className="feature__name">{key}</div>
+        <div className="feature" key={featureHash}>
+          <div className="feature__name">{feature}</div>
           <ul className="feature__list">{options}</ul>
         </div>
       );
