@@ -9,76 +9,29 @@ html {
 body {
   font-size: 1.8rem;
   line-height: 1.875;
+  color: #252525;
   margin: 0;
 }
 
-.App {
-  height: 100%;
-}
-
 header {
-  background-color: #dddddd;
+  background-color: #252525d2;
+  color: white;
   padding: 2rem;
 }
 
 main {
   display: flex;
   flex-direction: row;
-  height: 75%;
-  padding: 1.5rem;
+  padding: 1rem;
+}
+
+.App {
+  height: 100%;
 }
 
 .main__form {
   flex: 5;
   padding: 0.4rem;
-}
-
-.main__summary {
-  flex: 2;
-  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
-  margin: 0.2rem;
-  padding: 0.8rem;
-}
-
-.summary__option {
-  display: grid;
-  grid-template-areas:
-    'key cost'
-    'value value';
-  margin-top: 1rem;
-  box-shadow: 0 -0.1rem 0 0 rgba(0, 0, 0, 0.2);
-}
-
-.summary__option__label {
-  font-weight: bold;
-  grid-area: key;
-}
-
-.summary__option__value {
-  grid-area: value;
-}
-
-.summary__option__cost {
-  grid-area: cost;
-  text-align: right;
-}
-
-.summary__total {
-  font-size: 2.2rem;
-  line-height: 2.4;
-  display: flex;
-  margin-top: 1.5rem;
-  border-top: solid 1px rgba(0, 0, 0, 0.3);
-  padding: 0.3rem;
-}
-
-.summary__total__label {
-  font-weight: bold;
-  flex: 2;
-}
-
-.summary__total__value {
-  text-decoration: underline;
 }
 
 .feature {
@@ -132,4 +85,58 @@ main {
 .feature__option:not(:checked) + .feature__label:hover,
 .feature__option:not(:checked):focus + .feature__label {
   background-color: #dedede52
+}
+
+.main__summary {
+  flex: 3;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin: 0.2rem;
+  padding: 0.8rem;
+}
+
+@media screen and (min-width: 1000px) {
+  .main__summary {
+    flex: 2;
+  }
+}
+
+.summary__option {
+  display: grid;
+  grid-template-areas:
+    'key cost'
+    'value value';
+  margin-top: 1rem;
+  box-shadow: 0 -0.1rem 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.summary__option__label {
+  font-weight: bold;
+  grid-area: key;
+}
+
+.summary__option__value {
+  grid-area: value;
+}
+
+.summary__option__cost {
+  grid-area: cost;
+  text-align: right;
+}
+
+.summary__total {
+  font-size: 2.2rem;
+  line-height: 2.4;
+  display: flex;
+  margin-top: 1.5rem;
+  border-top: solid 1px rgba(0, 0, 0, 0.3);
+  padding: 0.3rem;
+}
+
+.summary__total__label {
+  font-weight: bold;
+  flex: 2;
+}
+
+.summary__total__value {
+  text-decoration: underline;
 }
