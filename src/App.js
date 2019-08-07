@@ -1,6 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
 
+function slugify(string) {
+  const a =
+    'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;';
+  const b =
+    'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------';
+  const p = new RegExp(a.split('').join('|'), 'g');
+
+  return string
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+    .replace(/&/g, '-and-') // Replace & with 'and'
+    .replace(/[^\w-]+/g, '') // Remove all non-word characters
+    .replace(/--+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -58,30 +77,26 @@ class App extends Component {
     const features = Object.keys(this.props.features).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
       const options = this.props.features[feature].map((item, index) => {
-        const itemHash = JSON.stringify(item);
-        const selectedClass =
-          item.name === this.state.selected[feature].name
-            ? 'feature__selected'
-            : '';
-        const featureClass = 'feature__option ' + selectedClass;
+        const itemHash = slugify(JSON.stringify(item));
         return (
           <div key={itemHash} className="feature__item">
-            <input type="radio"
+            <input
+              type="radio"
               value={index}
-              id={featureHash}
-              name={feature.trim().toLowerCase()}
+              id={itemHash}
+              className="feature__option"
+              name={slugify(feature)}
+              checked={item.name === this.state.selected[feature].name}
+              onChange={e => this.updateFeature(feature, item)}
             />
-            <div
-              className={featureClass}
-              onClick={e => this.updateFeature(feature, item)}
-            >
+            <label htmlFor={itemHash} className="feature__label">
               {item.name}(
               {new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD'
               }).format(item.cost)}
               )
-            </div>
+            </label>
           </div>
         );
       });
@@ -97,17 +112,15 @@ class App extends Component {
     return (
       <div className="App">
         <header>
-          <h1>ELF Computing</h1>
-          <h3>Laptops</h3>
-          <h5>Customize your laptop</h5>
+          <h1>ELF Computing | Laptops</h1>
         </header>
         <main>
-          <section className="main__form">
-            <h3>TECH SPECS AND CUSTOMIZATIONS</h3>
+          <form className="main__form">
+            <h2>Customize your laptop</h2>
             {features}
-          </section>
+          </form>
           <section className="main__summary">
-            <h3>NEW GREENLEAF 2018</h3>
+            <h2>New Greenleaf 2019</h2>
             {summary}
             <div className="summary__total">
               <div className="summary__total__label">Your Price: </div>
