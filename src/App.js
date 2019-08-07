@@ -65,7 +65,12 @@ class App extends Component {
             : '';
         const featureClass = 'feature__option ' + selectedClass;
         return (
-          <li key={itemHash} className="feature__item">
+          <div key={itemHash} className="feature__item">
+            <input type="radio"
+              value={index}
+              id={featureHash}
+              name={feature.trim().toLowerCase()}
+            />
             <div
               className={featureClass}
               onClick={e => this.updateFeature(feature, item)}
@@ -77,15 +82,15 @@ class App extends Component {
               }).format(item.cost)}
               )
             </div>
-          </li>
+          </div>
         );
       });
 
       return (
-        <div className="feature" key={featureHash}>
-          <div className="feature__name">{feature}</div>
-          <ul className="feature__list">{options}</ul>
-        </div>
+        <fieldset className="feature" key={featureHash}>
+          <legend className="feature__name">{feature}</legend>
+          {options}
+        </fieldset>
       );
     });
 
