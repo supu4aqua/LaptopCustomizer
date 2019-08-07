@@ -39,7 +39,6 @@ main {
 
 .main__form {
   flex: 4;
-  padding: 0.4rem;
 }
 
 .feature {
@@ -99,7 +98,7 @@ while keeping them available to the keyboard */
 }
 
 .main__summary {
-  flex: 2.5;
+  flex: 3;
   margin: 0.2rem;
   padding: 0 0.8rem;
 }

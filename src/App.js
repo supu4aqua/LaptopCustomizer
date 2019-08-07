@@ -82,7 +82,6 @@ class App extends Component {
           <div key={itemHash} className="feature__item">
             <input
               type="radio"
-              value={index}
               id={itemHash}
               className="feature__option"
               name={slugify(feature)}
@@ -90,7 +89,7 @@ class App extends Component {
               onChange={e => this.updateFeature(feature, item)}
             />
             <label htmlFor={itemHash} className="feature__label">
-              {item.name}(
+              {item.name} (
               {new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD'
@@ -120,7 +119,7 @@ class App extends Component {
             {features}
           </form>
           <section className="main__summary">
-            <h2>New Greenleaf 2019</h2>
+            <h2>Your Greenleaf 2019</h2>
             {summary}
             <div className="summary__total">
               <div className="summary__total__label">Your Price: </div>
