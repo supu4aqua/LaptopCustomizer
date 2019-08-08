@@ -15,14 +15,19 @@ body {
 
 header {
   background-color: #252525d2;
-  color: white;
+  color: #fff;
   padding: 2rem;
 }
 
-h1, main {
+header > h1,
+main {
   width: 95%;
   max-width: 120rem;
   margin: 0 auto;
+}
+
+legend > h3 {
+  margin: 0;
 }
 
 main {
@@ -33,10 +38,6 @@ main {
   margin: 0 auto;
 }
 
-.App {
-  height: 100%;
-}
-
 .main__form {
   flex: 4;
 }
@@ -44,21 +45,21 @@ main {
 .feature {
   padding: 0.8rem;
   padding-top: 0.4rem;
-  border-color: #252525;
+  border: 0;
 }
 
 .feature + .feature {
   margin-top: 0.8rem;
 }
 
-.feature legend {
+.feature__name {
   font-size: inherit;
   line-height: inherit;
   font-weight: bold;
 }
 
 .feature__item + .feature__item {
-  margin-top: 6px;
+  margin-top: 0.8rem;
 }
 
 /* Hide radios from sighted users,
@@ -76,31 +77,30 @@ while keeping them available to the keyboard */
 
 .feature__label {
   display: block;
-  padding: 0.2rem;
+  padding: 0.8rem;
+  border: 0.1rem solid #d6d6d6;
+  border-radius: 0.4rem;
+}
+
+.feature__label:hover {
+  border-color: #888;
 }
 
 .feature__option:checked + .feature__label {
-  background: #dedede;
+  border: 0.2rem solid #0070c9;
 }
 
 .feature__option:focus + .feature__label {
-  outline: 0.2rem solid blue;
-  outline-offset: 0.2rem;
+  box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.3rem #83c0fd;
 }
 
 .feature__option:not(:checked) + .feature__label {
   cursor: pointer;
 }
 
-.feature__option:not(:checked) + .feature__label:hover,
-.feature__option:not(:checked):focus + .feature__label {
-  background-color: #dedede52
-}
-
 .main__summary {
   flex: 3;
-  margin: 0.2rem;
-  padding: 0 0.8rem;
+  margin-left: 0.2rem;
 }
 
 .summary__option {
@@ -108,10 +108,12 @@ while keeping them available to the keyboard */
   grid-template-areas:
     'key cost'
     'value value';
+  padding: 0.2rem;
   margin-top: 1rem;
 }
 
 .summary__option__label {
+  font-size: 2.2rem;
   font-weight: bold;
   grid-area: key;
 }
