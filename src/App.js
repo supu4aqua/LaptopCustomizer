@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+
+// Normalizes string as a slug - a string that is safe to use
+// in both URLs and html attributes
+import slugify from 'slugify';
+
 import './App.css';
 
-// This function will allow us to 
+// This object will allow us to
 // easily convert numbers into US dollar values
 const USCurrencyFormat = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -9,37 +14,34 @@ const USCurrencyFormat = new Intl.NumberFormat('en-US', {
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: {
-        Processor: {
-          name: '17th Generation Intel Core HB (7 Core with donut spare)',
-          cost: 700
-        },
-        'Operating System': {
-          name: 'Ubuntu Linux 16.04',
-          cost: 200
-        },
-        'Video Card': {
-          name: 'Toyota Corolla 1.5v',
-          cost: 1150.98
-        },
-        Display: {
-          name: '15.6" UHD (3840 x 2160) 60Hz Bright Lights and Knobs',
-          cost: 1500
-        }
+  state = {
+    selected: {
+      Processor: {
+        name: '17th Generation Intel Core HB (7 Core with donut spare)',
+        cost: 700
+      },
+      'Operating System': {
+        name: 'Ubuntu Linux 16.04',
+        cost: 200
+      },
+      'Video Card': {
+        name: 'Toyota Corolla 1.5v',
+        cost: 1150.98
+      },
+      Display: {
+        name: '15.6" UHD (3840 x 2160) 60Hz Bright Lights and Knobs',
+        cost: 1500
       }
-    };
-  }
+    }
+  };
 
-  updateFeature(feature, newValue) {
+  updateFeature = (feature, newValue) => {
     const selected = Object.assign({}, this.state.selected);
     selected[feature] = newValue;
     this.setState({
       selected
     });
-  }
+  };
 
   render() {
     const features = Object.keys(this.props.features).map((feature, idx) => {
@@ -117,28 +119,6 @@ class App extends Component {
       </div>
     );
   }
-}
-/**
- * Turn a string into a slug - something safe to use in both URLs and attributes, such as the IDs in our app.
- * Credit: https://gist.github.com/hagemann/382adfc57adbd5af078dc93feef01fe1#file-slugify-js
- */
-function slugify(string) {
-  const a =
-    'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;';
-  const b =
-    'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------';
-  const p = new RegExp(a.split('').join('|'), 'g');
-
-  return string
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w-]+/g, '') // Remove all non-word characters
-    .replace(/--+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, ''); // Trim - from end of text
 }
 
 export default App;
