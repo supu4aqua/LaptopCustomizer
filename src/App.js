@@ -1,25 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 
-function slugify(string) {
-  const a =
-    'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;';
-  const b =
-    'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------';
-  const p = new RegExp(a.split('').join('|'), 'g');
-
-  return string
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
-    .replace(/&/g, '-and-') // Replace & with 'and'
-    .replace(/[^\w-]+/g, '') // Remove all non-word characters
-    .replace(/--+/g, '-') // Replace multiple - with single -
-    .replace(/^-+/, '') // Trim - from start of text
-    .replace(/-+$/, ''); // Trim - from end of text
-}
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -54,29 +35,9 @@ class App extends Component {
   }
 
   render() {
-    const summary = Object.keys(this.state.selected).map(key => (
-      <div className="summary__option" key={key}>
-        <div className="summary__option__label">{key} </div>
-        <div className="summary__option__value">
-          {this.state.selected[key].name}
-        </div>
-        <div className="summary__option__cost">
-          {new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }).format(this.state.selected[key].cost)}
-        </div>
-      </div>
-    ));
-
-    const total = Object.keys(this.state.selected).reduce(
-      (acc, curr) => acc + this.state.selected[curr].cost,
-      0
-    );
-
     const features = Object.keys(this.props.features).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
-      const options = this.props.features[feature].map((item, index) => {
+      const options = this.props.features[feature].map(item => {
         const itemHash = slugify(JSON.stringify(item));
         return (
           <div key={itemHash} className="feature__item">
@@ -110,6 +71,30 @@ class App extends Component {
       );
     });
 
+    const summary = Object.keys(this.state.selected).map((feature, idx) => {
+      const featureHash = feature + '-' + idx;
+
+      return (
+        <div className="summary__option" key={featureHash}>
+          <div className="summary__option__label">{feature} </div>
+          <div className="summary__option__value">
+            {this.state.selected[feature].name}
+          </div>
+          <div className="summary__option__cost">
+            {new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+            }).format(this.state.selected[feature].cost)}
+          </div>
+        </div>
+      );
+    });
+
+    const total = Object.keys(this.state.selected).reduce(
+      (acc, curr) => acc + this.state.selected[curr].cost,
+      0
+    );
+
     return (
       <div className="App">
         <header>
@@ -137,6 +122,28 @@ class App extends Component {
       </div>
     );
   }
+}
+/**
+ * Turn a string into a slug - something safe to use in both URLs and attributes, such as the IDs in our app.
+ * Credit: https://gist.github.com/hagemann/382adfc57adbd5af078dc93feef01fe1#file-slugify-js
+ */
+function slugify(string) {
+  const a =
+    'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;';
+  const b =
+    'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------';
+  const p = new RegExp(a.split('').join('|'), 'g');
+
+  return string
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+    .replace(/&/g, '-and-') // Replace & with 'and'
+    .replace(/[^\w-]+/g, '') // Remove all non-word characters
+    .replace(/--+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
 }
 
 export default App;
