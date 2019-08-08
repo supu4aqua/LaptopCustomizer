@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 
+// This function will allow us to 
+// easily convert numbers into US dollar values
+const USCurrencyFormat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+});
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -50,12 +57,7 @@ class App extends Component {
               onChange={e => this.updateFeature(feature, item)}
             />
             <label htmlFor={itemHash} className="feature__label">
-              {item.name} (
-              {new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD'
-              }).format(item.cost)}
-              )
+              {item.name} ({USCurrencyFormat.format(item.cost)})
             </label>
           </div>
         );
@@ -73,18 +75,14 @@ class App extends Component {
 
     const summary = Object.keys(this.state.selected).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
+      const selectedOption = this.state.selected[feature];
 
       return (
         <div className="summary__option" key={featureHash}>
           <div className="summary__option__label">{feature} </div>
-          <div className="summary__option__value">
-            {this.state.selected[feature].name}
-          </div>
+          <div className="summary__option__value">{selectedOption.name}</div>
           <div className="summary__option__cost">
-            {new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD'
-            }).format(this.state.selected[feature].cost)}
+            {USCurrencyFormat.format(selectedOption.cost)}
           </div>
         </div>
       );
@@ -111,10 +109,7 @@ class App extends Component {
             <div className="summary__total">
               <div className="summary__total__label">Total</div>
               <div className="summary__total__value">
-                {new Intl.NumberFormat('en-US', {
-                  style: 'currency',
-                  currency: 'USD'
-                }).format(total)}
+                {USCurrencyFormat.format(total)}
               </div>
             </div>
           </section>
