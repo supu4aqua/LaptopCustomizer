@@ -102,7 +102,9 @@ class App extends Component {
 
       return (
         <fieldset className="feature" key={featureHash}>
-          <legend className="feature__name">{feature}</legend>
+          <legend className="feature__name">
+            <h3>{feature}</h3>
+          </legend>
           {options}
         </fieldset>
       );
@@ -119,10 +121,10 @@ class App extends Component {
             {features}
           </form>
           <section className="main__summary">
-            <h2>Your Greenleaf 2019</h2>
+            <h2>Your cart</h2>
             {summary}
             <div className="summary__total">
-              <div className="summary__total__label">Your Price: </div>
+              <div className="summary__total__label">Total</div>
               <div className="summary__total__value">
                 {new Intl.NumberFormat('en-US', {
                   style: 'currency',
